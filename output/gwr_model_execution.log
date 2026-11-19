@@ -1,7 +1,7 @@
 
 ================================================================================
    GWR MODEL ESTIMATION & BANDWIDTH SELECTION (04_gwr_model.py)
-   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Seluruh Pulau Jawa (n=119)
+   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Pulau Jawa (n=119) | Y = IPM
 ================================================================================
 
 [1/5] MEMUAT DATA & PRA-PEMROSESAN SPASIAL
@@ -14,22 +14,22 @@
   ----------------------------------------------------------------------------
   No  | Model                    | Bandwidth  | ENP     | AICc    | Status          
   ----------------------------------------------------------------------------
-  1   | GWR_Gaussian_Fixed       | 459.31 km  | 5.3     | 1297.77 | [OK]            
-  2   | GWR_Bisquare_Fixed       | 1140.58 km | 4.97    | 1298.3  | [OK]            
-  3   | GWR_Exponential_Fixed    | 340.43 km  | 8.35    | 1294.3  | [OK]            
-  4   | GWR_Gaussian_Adaptive    | 85 tetangga | 5.4     | 1298.02 | [OK]            
-  5   | GWR_Bisquare_Adaptive    | 117 tetangga | 6.9     | 1297.26 | [OK]            
-  6   | GWR_Exponential_Adaptive | 91 tetangga | 6.96    | 1296.41 | [OK]            
+  1   | GWR_Gaussian_Fixed       | 1918.16 km | 4.08    | 651.91  | [OK]            
+  2   | GWR_Bisquare_Fixed       | 1918.23 km | 4.32    | 652.39  | [OK]            
+  3   | GWR_Exponential_Fixed    | 1918.21 km | 4.66    | 652.35  | [OK]            
+  4   | GWR_Gaussian_Adaptive    | 117 tetangga | 4.58    | 652.67  | [OK]            
+  5   | GWR_Bisquare_Adaptive    | 28 tetangga | 36.41   | 678.56  | [OK]            
+  6   | GWR_Exponential_Adaptive | 117 tetangga | 6.02    | 652.97  | [OK]            
   ----------------------------------------------------------------------------
 
 [3/5] AUDIT STABILITAS & SELEKSI SEMENTARA
-  [+] Model dengan AICc Terendah : GWR_Exponential_Fixed
-      Bandwidth: 340.43 km | AICc: 1294.3 | ENP: 8.35
+  [+] Model dengan AICc Terendah : GWR_Gaussian_Fixed
+      Bandwidth: 1918.16 km | AICc: 651.91 | ENP: 4.08
 
 [4/5] EKSTRAKSI KOEFISIEN LOKAL & DIAGNOSTIK
-  [+] Condition Number lokal maksimum: 2.94 (Batas curiga > 30)
+  [+] Condition Number lokal maksimum: 2.05 (Batas curiga > 30)
   [+] Kestabilan matriks lokal: Stabil dan andal.
-  [+] Rentang Local R2: 0.289 s.d. 0.357
+  [+] Rentang Local R2: 0.540 s.d. 0.542
 
 [5/5] MENYIMPAN BERKAS SERAH TERIMA (KONTRAK BAB 1)
   [✓] Disimpan: D:\Nia\Kuliah\SEM 5\ML\output\tabel\tabel7_seleksi_gwr.csv

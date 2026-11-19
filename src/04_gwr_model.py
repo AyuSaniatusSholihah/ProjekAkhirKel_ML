@@ -64,7 +64,7 @@ def cetak_banner():
     banner = """
 ================================================================================
    GWR MODEL ESTIMATION & BANDWIDTH SELECTION (04_gwr_model.py)
-   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Seluruh Pulau Jawa (n=119)
+   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Pulau Jawa (n=119) | Y = IPM
 ================================================================================
 """
     logger.info(banner)
@@ -86,6 +86,7 @@ def load_and_preprocess_data():
     """
     logger.info("[1/5] MEMUAT DATA & PRA-PEMROSESAN SPASIAL")
     
+    path_raw_ipm = config.DATA_DIR / "Dataset_Jawa_2024_IPM.csv"
     path_raw_jawa = config.DATA_DIR / "Dataset_Jawa_2024_dengan_koordinat.csv"
     
     if config.PATH_DATA_CSV.exists():
@@ -94,22 +95,16 @@ def load_and_preprocess_data():
     elif config.PATH_DATA_XLSX.exists():
         df = pd.read_excel(config.PATH_DATA_XLSX)
         logger.info(f"  [+] Membaca berkas Excel: {config.PATH_DATA_XLSX.name} ({len(df)} baris)")
-    elif path_raw_jawa.exists():
-        logger.info(f"  [+] Membaca {path_raw_jawa.name} dan auto-filter untuk Provinsi Jawa Tengah (35 wilayah)...")
+    elif path_raw_ipm.exists() or path_raw_jawa.exists():
+        src_path = path_raw_ipm if path_raw_ipm.exists() else path_raw_jawa
+        logger.info(f"  [+] Membaca {src_path.name}...")
         # Deteksi separator ; atau ,
         try:
-            df_raw = pd.read_csv(path_raw_jawa, sep=";")
+            df_raw = pd.read_csv(src_path, sep=";")
             if df_raw.shape[1] <= 1:
-                df_raw = pd.read_csv(path_raw_jawa, sep=",")
+                df_raw = pd.read_csv(src_path, sep=",")
         except Exception:
-            df_raw = pd.read_csv(path_raw_jawa, sep=",")
-
-        # Filter Jawa Tengah
-        col_prov = [c for c in df_raw.columns if "provinsi" in c.lower()]
-        if col_prov:
-            df_jt = df_raw[df_raw[col_prov[0]].astype(str).str.strip().str.lower() == "jawa tengah"].copy()
-        else:
-            df_jt = df_raw.copy()
+            df_raw = pd.read_csv(src_path, sep=",")
 
         def format_nama(n):
             n = ' '.join(str(n).strip().split())
@@ -117,26 +112,26 @@ def load_and_preprocess_data():
                 return "Kota " + n[5:].title()
             return n.title()
 
-        col_kab = [c for c in df_jt.columns if "kabupaten" in c.lower() or "kota" in c.lower()][0]
-        col_y = [c for c in df_jt.columns if "pdrb" in c.lower() or "y:" in c.lower()][0]
-        col_x1 = [c for c in df_jt.columns if "x1" in c.lower() or "infrastruktur" in c.lower()][0]
-        col_x2 = [c for c in df_jt.columns if "x2" in c.lower() or "keterampilan" in c.lower()][0]
-        col_x3 = [c for c in df_jt.columns if "x3" in c.lower() or "pemberdayaan" in c.lower()][0]
-        col_lat = [c for c in df_jt.columns if "lintang" in c.lower() or "lat" in c.lower()][0]
-        col_lon = [c for c in df_jt.columns if "bujur" in c.lower() or "lon" in c.lower()][0]
+        col_prov = [c for c in df_raw.columns if "provinsi" in c.lower()]
+        col_kab = [c for c in df_raw.columns if "kabupaten" in c.lower() or "kota" in c.lower()][0]
+        col_y = [c for c in df_raw.columns if "ipm" in c.lower() or "pdrb" in c.lower() or "y:" in c.lower()][0]
+        col_x1 = [c for c in df_raw.columns if "x1" in c.lower() or "infrastruktur" in c.lower()][0]
+        col_x2 = [c for c in df_raw.columns if "x2" in c.lower() or "keterampilan" in c.lower()][0]
+        col_x3 = [c for c in df_raw.columns if "x3" in c.lower() or "pemberdayaan" in c.lower()][0]
+        col_lat = [c for c in df_raw.columns if "lintang" in c.lower() or "lat" in c.lower()][0]
+        col_lon = [c for c in df_raw.columns if "bujur" in c.lower() or "lon" in c.lower()][0]
 
         df = pd.DataFrame()
         if col_prov:
-            df["provinsi"] = df_jt[col_prov[0]].str.strip()
-        df[config.KOL_NAMA] = df_jt[col_kab].apply(format_nama)
-        df[config.KOL_Y] = pd.to_numeric(df_jt[col_y].astype(str).str.replace(",", "."), errors="coerce")
-        df["x1_infrastruktur"] = pd.to_numeric(df_jt[col_x1].astype(str).str.replace(",", "."), errors="coerce")
-        df["x2_keterampilan"] = pd.to_numeric(df_jt[col_x2].astype(str).str.replace(",", "."), errors="coerce")
-        df["x3_pemberdayaan"] = pd.to_numeric(df_jt[col_x3].astype(str).str.replace(",", "."), errors="coerce")
-        df["lintang"] = pd.to_numeric(df_jt[col_lat].astype(str).str.replace(",", "."), errors="coerce")
-        df["bujur"] = pd.to_numeric(df_jt[col_lon].astype(str).str.replace(",", "."), errors="coerce")
+            df["provinsi"] = df_raw[col_prov[0]].str.strip()
+        df[config.KOL_NAMA] = df_raw[col_kab].apply(format_nama)
+        df[config.KOL_Y] = pd.to_numeric(df_raw[col_y].astype(str).str.replace(",", "."), errors="coerce")
+        df["x1_infrastruktur"] = pd.to_numeric(df_raw[col_x1].astype(str).str.replace(",", "."), errors="coerce")
+        df["x2_keterampilan"] = pd.to_numeric(df_raw[col_x2].astype(str).str.replace(",", "."), errors="coerce")
+        df["x3_pemberdayaan"] = pd.to_numeric(df_raw[col_x3].astype(str).str.replace(",", "."), errors="coerce")
+        df["lintang"] = pd.to_numeric(df_raw[col_lat].astype(str).str.replace(",", "."), errors="coerce")
+        df["bujur"] = pd.to_numeric(df_raw[col_lon].astype(str).str.replace(",", "."), errors="coerce")
 
-        # Simpan otomatis ke data_jateng.csv agar sinkron dengan rekan tim
         df.to_csv(config.PATH_DATA_CSV, index=False)
         logger.info(f"  [✓] Berkas {config.PATH_DATA_CSV.name} berhasil diekstrak otomatis ({len(df)} baris)")
     else:

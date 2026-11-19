@@ -1,13 +1,13 @@
 # Pembagian Tugas (JOBDESK.md) - Analisis OLS vs GWR Jateng 2024
 
-Proyek: Analisis OLS vs GWR Pengaruh Pilar IMDI 2024 terhadap PDRB per Kapita ADHK 2010 di 35 Kabupaten/Kota Jawa Tengah.
+Proyek: Analisis OLS vs GWR Pengaruh Pilar IMDI 2024 terhadap Indeks Pembangunan Manusia (IPM) 2024 di 119 Kabupaten/Kota se-Pulau Jawa.
 
 ---
 
 ## 1. Naya — Model OLS, Data, EDA & Moran's I (Langkah 1–4)
 - **Skrip:** `01_eksplorasi.py`, `02_moran.py`, `03_ols.py`
 - **Output Serah Terima:**
-  - `data/data_jateng.csv`
+  - `data/data_jawa.csv`
   - `output/tabel/tabel5_ols.csv`
   - `output/tabel/metrik_ols.csv`
   - `output/tabel/tabel6_asumsi_ols.csv`
@@ -20,7 +20,7 @@ Proyek: Analisis OLS vs GWR Pengaruh Pilar IMDI 2024 terhadap PDRB per Kapita AD
 - **Tugas:**
   - Estimasi 6 kombinasi kernel x bandwidth type (Fixed km & Adaptive NN).
   - Optimasi bandwidth Cross-Validation (CV) minimum.
-  - Interval pencarian adaptif dibatasi 6–35 tetangga.
+  - Interval pencarian adaptif 10–119 tetangga.
   - Proyeksi koordinat ke UTM Zone 49S (km).
 - **Output Serah Terima:**
   - `output/tabel/tabel7_seleksi_gwr.csv`

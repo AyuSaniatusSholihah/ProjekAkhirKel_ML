@@ -1,13 +1,13 @@
-# Panduan Lengkap (Revisi): OLS vs GWR Digitalisasi dan PDRB per Kapita Jawa Tengah
+# Panduan Lengkap (Revisi): OLS vs GWR Digitalisasi dan Indeks Pembangunan Manusia (IPM) Pulau Jawa
 
-**Topik:** Pilar IMDI 2024 (*Infrastruktur dan Ekosistem, Keterampilan, Pemberdayaan*) terhadap PDRB per kapita, 35 kabupaten/kota Jawa Tengah.  
-**Tanggal Revisi:** 18 November 2026  
-**Pasangan Berkas:** `data_jateng.csv`, `README.md`, `JOBDESK.md`, paket kode `gwr-jateng.zip`.
+**Topik:** Pilar IMDI 2024 (*Infrastruktur dan Ekosistem, Keterampilan, Pemberdayaan*) terhadap Indeks Pembangunan Manusia (IPM) 2024, 119 kabupaten/kota se-Pulau Jawa.  
+**Tanggal Revisi:** 19 November 2026  
+**Pasangan Berkas:** `data_jawa.csv`, `README.md`, `JOBDESK.md`.
 
 ---
 
 ### Yang Berubah dari Versi Sebelumnya
-1. Data Jateng sudah disiapkan dari `Dataset_Jawa_2024.xlsx`.
+1. Variabel dependen ($Y$) diperbarui menjadi **IPM (Indeks Pembangunan Manusia) 2024** dan cakupan wilayah diperluas ke **seluruh kabupaten/kota di Pulau Jawa ($n = 119$)** dari `Dataset_Jawa_2024_IPM.csv` / `data_jawa.csv`.
 2. Pekerjaan dibagi ke empat anggota.
 3. `04_gwr.py` dipecah dua (`04_gwr_model.py` dan `04b_evaluasi.py`).
 4. Prompt AI dibuat per orang plus prompt gabungan.
@@ -32,7 +32,7 @@ OLS cepat dengan tiga pilar:
 
 | Hal | Temuan | Tindakan |
 | :--- | :--- | :--- |
-| **Satuan Y** | Dataset memakai ADHK 2010 (ribu rupiah) | Tulis ADHK 2010, bukan ADHK 2024 |
+| **Satuan Y** | Dataset memakai IPM (Indeks Pembangunan Manusia, skala 0–100) | Tulis IPM 2024, skala indeks komposit BPS |
 | **Label X1** | Sumber menamai "Infrastruktur dan Ekosistem" | Samakan penamaan di naskah |
 | **Nilai Ekstrem Y** | Kota Semarang, Kota Surakarta, Kudus ($|z| > 2$ dan $> 3$) | Catat dan bahas sebagai nilai ekstrem/outlier |
 | **Koordinat** | Sudah ada di CSV (centroid) | Lewati `00_isi_koordinat.py` |
@@ -58,7 +58,7 @@ Semua berkas disimpan di folder `output/tabel/` kecuali dinyatakan lain. **Janga
 
 | Pemilik | Berkas | Isi Minimal | Dibaca Oleh |
 | :--- | :--- | :--- | :--- |
-| **Naya** | `data/data_jateng.csv` | 35 baris, 7 kolom (nama, Y, X1–X3, lintang, bujur) | Semua |
+| **Naya** | `data/data_jawa.csv` | 119 baris, 8 kolom (provinsi, nama, Y/ipm, X1–X3, lintang, bujur) | Semua |
 | **Naya** | `tabel5_ols.csv` | Koefisien, std. error, $t$, $p$, VIF | April, Nisa |
 | **Naya** | `metrik_ols.csv` | $R^2$, Adj $R^2$, $F$, AICc, AIC, MAE, RMSE, RSS | April |
 | **Naya** | `tabel6_asumsi_ols.csv` | KS, Shapiro-Wilk, White, VIF maks, Moran's I residual | April |
@@ -112,19 +112,20 @@ python -c "import numpy, pandas, scipy, statsmodels, esda, libpysal, mgwr, geopa
 - Satu cabang per orang: `naya/ols`, `nia/gwr`, `april/evaluasi`, `nisa/visualisasi`.
 - Merge ke `main` lewat pull request, jangan push langsung.
 - Berkas bersama (`config.py`, `utils.py`, `requirements.txt`) diubah hanya setelah kabar ke grup.
-- `data_jateng.csv` hanya diubah oleh pemegang data.
+- `data_jawa.csv` hanya diubah oleh pemegang data.
 
 ---
 
 ## Bab 3. Data
 
-Letakkan `data_jateng.csv` di `data/`.  
-**Format:** UTF-8, titik desimal, 35 baris, tanpa sel kosong.
+Letakkan `data_jawa.csv` (atau `Dataset_Jawa_2024_IPM.csv`) di `data/`.  
+**Format:** UTF-8, titik desimal, 119 baris, tanpa sel kosong.
 
 | Kolom | Isi |
 | :--- | :--- |
+| `provinsi` | Nama provinsi di Pulau Jawa (Banten, DKI, Jabar, Jateng, DIY, Jatim) |
 | `kabupaten_kota` | Kabupaten polos (contoh: `Tegal`), kota berawalan `Kota` (contoh: `Kota Tegal`) |
-| `pdrb_per_kapita` | $Y$, ADHK 2010 (ribu rupiah) |
+| `ipm` | $Y$, Indeks Pembangunan Manusia 2024 (skala 0–100) |
 | `x1_infrastruktur` | $X_1$, skor pilar IMDI 2024 |
 | `x2_keterampilan` | $X_2$, skor pilar IMDI 2024 |
 | `x3_pemberdayaan` | $X_3$, skor pilar IMDI 2024 |
@@ -229,12 +230,12 @@ Letakkan `data_jateng.csv` di `data/`.
 | :--- | :--- |
 | **3.3 bobot Moran's I** | KNN $k = 4$ atau queen, terstandardisasi baris |
 | **3.4 dan Tabel 5** | X dipusatkan; intersep = Y pada skor rata-rata; sebut KS dan Shapiro-Wilk sebagai pembanding |
-| **3.6 jarak** | Euclidean pada UTM 49S dalam km; fixed dalam km; adaptif = jumlah tetangga (6 sampai 35) |
+| **3.6 jarak** | Euclidean pada UTM 49S dalam km; fixed dalam km; adaptif = jumlah tetangga (10 sampai 119) |
 | **3.7 uji per variabel** | Monte Carlo permutasi lokasi, bukan uji F Leung (atau gunakan alat lain bila jurnal menuntut) |
 | **3.7 autokorelasi residual GWR** | Moran's I pada residual, bukan uji Leung dkk. |
 | **3.7 uji t lokal** | dua sisi $p < \alpha$, setara $p < \alpha/2$ satu sisi |
 | **3.7 dan 4.4 model terbaik** | kriteria utama (default AICc minimum) |
-| **3.1 data** | Y = ADHK 2010; X1 = Infrastruktur dan Ekosistem |
+| **3.1 data** | Y = IPM 2024; X1 = Infrastruktur dan Ekosistem |
 
 ### Peta Berkas ke Naskah
 - **Tabel 3:** `tabel3_deskriptif.csv`
@@ -258,9 +259,9 @@ Dipakai di asisten AI VS Code yang bisa membaca folder proyek (Claude Code, Copi
 ### P0. Konteks Tetap (Semua Anggota)
 ```text
 Peran: asisten analis data untuk naskah jurnal tim kami.
-Proyek: folder gwr-jateng (Python, VS Code). Analisis OLS vs GWR hubungan tiga pilar IMDI 2024
-(X1 Infrastruktur dan Ekosistem, X2 Keterampilan Digital, X3 Pemberdayaan) dengan PDRB per kapita
-ADHK 2010 (Y) di 35 kabupaten/kota Jawa Tengah, data cross-section.
+Proyek: folder proyek (Python, VS Code). Analisis OLS vs GWR hubungan tiga pilar IMDI 2024
+(X1 Infrastruktur dan Ekosistem, X2 Keterampilan Digital, X3 Pemberdayaan) dengan Indeks Pembangunan Manusia
+IPM 2024 (Y) di 119 kabupaten/kota se-Pulau Jawa, data cross-section.
 
 Pembagian tim: Naya = data, EDA, Moran's I, OLS; Nia = model GWR dan bandwidth; April = evaluasi model;
 Nisa = interpretasi dan visualisasi. Saya adalah: [nama dan peran saya]. Kerjakan hanya bagian peran saya
@@ -271,7 +272,7 @@ Aturan tetap:
    atau membulatkan sendiri. Bila angka tidak ada, katakan tidak ada.
 2. Jangan mengubah kode di src/ kecuali saya minta. Usulkan perubahan dan alasannya dulu.
 3. Hubungan yang ditemukan adalah keterkaitan, bukan sebab-akibat.
-4. n = 35, sebut hasil bersifat eksploratif.
+4. n = 119 kabupaten/kota se-Pulau Jawa, sebut hasil bersifat empiris spasial.
 5. Bahasa Indonesia akademik, ringkas.
 6. Bila hasil tidak mendukung dugaan, laporkan apa adanya.
 7. Jangan mengubah pilihan analisis (kernel, kriteria bandwidth, ALPHA, jenis bobot, SEED) hanya untuk
@@ -279,7 +280,7 @@ Aturan tetap:
 
 Baca README.md, JOBDESK.md, dan src/config.py, lalu ringkas pemahamanmu dalam 5 kalimat sebelum mengerjakan apa pun.
 
-Cek hasil: ringkasan menyebut OLS vs GWR, 35 wilayah, tiga pilar, ADHK 2010, dan peranmu.
+Cek hasil: ringkasan menyebut OLS vs GWR, 119 wilayah se-Pulau Jawa, tiga pilar, IPM 2024, dan peranmu.
 ```
 
 ### P1. Verifikasi Lingkungan (Semua)
@@ -293,18 +294,17 @@ Bila ada error, diagnosis penyebabnya dan beri perintah perbaikan satu per satu.
 
 #### N1. Validasi Data
 ```text
-Periksa data/data_jateng.csv tanpa mengubahnya: (a) tepat 35 baris, (b) tidak ada sel kosong, (c) tidak ada
-nama ganda (Magelang, Pekalongan, Tegal, Semarang harus dibedakan: kabupaten polos, kota berawalan "Kota"),
-(d) skor X1-X3 di rentang 1-100 dan PDRB per kapita positif, (e) lintang antara -8.5 dan -5.5 serta bujur
-antara 108 dan 112, (f) wilayah ekstrem (|z| > 2 dan > 3). Laporkan sebagai tabel temuan. Jangan memperbaiki
-data; saya yang memutuskan.
+Periksa data/data_jawa.csv tanpa mengubahnya: (a) tepat 119 baris, (b) tidak ada sel kosong, (c) tidak ada
+nama ganda di provinsi yang sama, (d) skor X1-X3 di rentang 1-100 dan IPM di rentang 0-100, (e) lintang antara
+-9.0 dan -5.5 serta bujur antara 105.0 dan 115.0, (f) wilayah ekstrem (|z| > 2 dan > 3). Laporkan sebagai tabel temuan.
+Jangan memperbaiki data; saya yang memutuskan.
 ```
 
 #### N2. EDA (Subbab 4.1)
 ```text
 Jalankan python src/01_eksplorasi.py. Dari tabel3_deskriptif.csv, korelasi.csv, dan gambar2_3_persebaran.png,
-tulis narasi Subbab 4.1 (maksimal 2 paragraf): (a) wilayah dengan PDRB per kapita tertinggi dan terendah,
-(b) pola tiap pilar dan apakah wilayah ber-PDRB tinggi juga bernilai pilar tinggi, (c) kesimpulan awal bahwa
+tulis narasi Subbab 4.1 (maksimal 2 paragraf): (a) wilayah dengan IPM tertinggi dan terendah,
+(b) pola tiap pilar dan apakah wilayah ber-IPM tinggi juga bernilai pilar tinggi, (c) kesimpulan awal bahwa
 hubungan tampak berbeda antarwilayah atau tidak. Bahas nilai ekstrem Y. Tandai kalimat yang bersandar pada
 gambar, bukan tabel.
 ```
@@ -322,8 +322,8 @@ yang dilaporkan.
 Jalankan python src/03_ols.py. Dari tabel5_ols.csv, tabel6_asumsi_ols.csv, dan metrik_ols.csv:
 (1) susun Tabel 5 dengan ** untuk p < 0.05 dan * untuk p < 0.10, (2) tulis pembahasan 4.3: variabel signifikan,
 arah koefisien, R2 dan Adj R2, (3) tulis interpretasi Tabel 6: asumsi mana yang terpenuhi dan apakah
-Moran's I residual signifikan. X dipusatkan, jadi intersep = nilai Y pada skor rata-rata; jangan
-menafsirkannya sebagai PDRB pada skor nol. Pastikan residual_ols.csv tersimpan untuk April dan Nisa.
+Moran's I residual signifikan. X dipusatkan, jadi intersep = nilai Y pada skor rata-rata pilar; jangan
+menafsirkannya sebagai IPM pada skor nol. Pastikan residual_ols.csv tersimpan untuk April dan Nisa.
 
 Cek hasil: tanda bintang cocok dengan kolom p_value; Moran's I residual menentukan apakah argumen GWR masih berdiri.
 ```
@@ -404,9 +404,9 @@ mengikuti tujuan penelitian di Pendahuluan.
 ```text
 Bandingkan Bab 3 naskah dengan kode di src/ (config.py, 02, 03, 04_gwr_model, 04b_evaluasi). Buat tabel
 [bagian naskah | yang tertulis | yang dikerjakan kode | usulan kalimat pengganti]. Perhatikan: jenis bobot
-Moran's I, X dipusatkan, jarak km pada UTM 49S, bandwidth adaptif 6-35, uji heterogenitas (Monte Carlo,
+Moran's I, X dipusatkan, jarak km pada UTM 49S, bandwidth adaptif 10-119, uji heterogenitas (Monte Carlo,
 bukan F Leung), uji autokorelasi residual GWR (Moran's I), uji t dua sisi, kriteria model terbaik, dan
-satuan Y (ADHK 2010). Jangan mengubah naskah, hanya usulkan.
+satuan Y (IPM skala 0–100). Jangan mengubah naskah, hanya usulkan.
 ```
 
 #### K3. Audit Akhir Angka dan Klaim (Wajib)
@@ -459,7 +459,7 @@ Tahap + berkas sumber + keluaran yang diminta + batasan.
 ## Bab 9. Checklist Sebelum Submit
 
 ### Data dan Replikasi
-- [ ] `data_jateng.csv` berisi data asli, 35 baris, sumber dan tahun tercatat; satuan Y ADHK 2010 ditulis
+- [ ] `data_jawa.csv` berisi data asli, 119 baris, sumber dan tahun tercatat; variabel Y IPM 2024 ditulis
 - [ ] Uji coba simulasi sudah dilakukan, data asli dikembalikan, `output/` dibersihkan
 - [ ] `N_MONTE_CARLO = 1000` untuk run final; `SEED 42` dicatat di naskah
 - [ ] `pip freeze > requirements-lock.txt` setelah run final

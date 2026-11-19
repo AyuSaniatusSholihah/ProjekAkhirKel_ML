@@ -24,8 +24,9 @@ PATH_DATA_XLSX = DATA_DIR / "data_jawa.xlsx"
 PATH_GEOJSON = DATA_DIR / "jawa_kabkota.geojson"
 
 # Definisi Kolom Dataset CSV
+KOL_PROVINSI = "provinsi"
 KOL_NAMA = "kabupaten_kota"
-KOL_Y = "pdrb_per_kapita"
+KOL_Y = "ipm"
 KOL_X = ["x1_infrastruktur", "x2_keterampilan", "x3_pemberdayaan"]
 KOL_LAT = "lintang"
 KOL_LON = "bujur"
