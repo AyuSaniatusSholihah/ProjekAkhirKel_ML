@@ -1,0 +1,13 @@
+{
+  "nama_model": "GWR_Exponential_Fixed",
+  "kernel": "exponential",
+  "tipe_bandwidth": "Fixed",
+  "fixed": true,
+  "bandwidth": 340.43,
+  "satuan_bw": "km",
+  "ENP": 8.35,
+  "AICc": 1294.3,
+  "RMSE": 51.07,
+  "MAE": 25.66,
+  "catatan_audit": "[OK]"
+}

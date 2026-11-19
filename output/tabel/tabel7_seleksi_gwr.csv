@@ -1,0 +1,7 @@
+model,kernel,tipe_bandwidth,bandwidth,satuan_bw,ENP,RSS,AICc,RMSE,MAE,catatan
+GWR_Gaussian_Fixed,gaussian,Fixed,459.31,km,5.3,339091.12,1297.77,53.38,27.0,[OK]
+GWR_Bisquare_Fixed,bisquare,Fixed,1140.58,km,4.97,342729.37,1298.3,53.67,27.25,[OK]
+GWR_Exponential_Fixed,exponential,Fixed,340.43,km,8.35,310412.19,1294.3,51.07,25.66,[OK]
+GWR_Gaussian_Adaptive,gaussian,Adaptive,85.0,tetangga,5.4,339174.87,1298.02,53.39,26.6,[OK]
+GWR_Bisquare_Adaptive,bisquare,Adaptive,117.0,tetangga,6.9,327458.34,1297.26,52.46,25.37,[OK]
+GWR_Exponential_Adaptive,exponential,Adaptive,91.0,tetangga,6.96,324717.11,1296.41,52.24,26.18,[OK]

@@ -18,9 +18,10 @@ OUTPUT_TABEL_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_GAMBAR_DIR.mkdir(parents=True, exist_ok=True)
 
 # Berkas Data
-PATH_DATA_CSV = DATA_DIR / "data_jateng.csv"
-PATH_DATA_XLSX = DATA_DIR / "data_jateng.xlsx"
-PATH_GEOJSON = DATA_DIR / "jateng_kabkota.geojson"
+PATH_DATA_CSV = DATA_DIR / "data_jawa.csv"
+PATH_DATA_JATENG_CSV = DATA_DIR / "data_jateng.csv"
+PATH_DATA_XLSX = DATA_DIR / "data_jawa.xlsx"
+PATH_GEOJSON = DATA_DIR / "jawa_kabkota.geojson"
 
 # Definisi Kolom Dataset CSV
 KOL_NAMA = "kabupaten_kota"
@@ -46,9 +47,9 @@ PUSATKAN_X = True
 N_MONTE_CARLO = 500  # Naikkan ke 1000 untuk run naskah final
 SEED = 42
 
-# Batas Pencarian Bandwidth GWR Adaptif (Kritis untuk n=35)
-GWR_MIN_NN = 6
-GWR_MAX_NN = 35
+# Batas Pencarian Bandwidth GWR Adaptif (Disesuaikan untuk Pulau Jawa n=119)
+GWR_MIN_NN = 10
+GWR_MAX_NN = 119
 
 # Kriteria Pemilihan Model Terbaik di Evaluasi
 PILIH_BERDASARKAN = "AICc"

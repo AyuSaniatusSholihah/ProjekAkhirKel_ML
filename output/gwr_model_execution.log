@@ -1,0 +1,42 @@
+
+================================================================================
+   GWR MODEL ESTIMATION & BANDWIDTH SELECTION (04_gwr_model.py)
+   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Seluruh Pulau Jawa (n=119)
+================================================================================
+
+[1/5] MEMUAT DATA & PRA-PEMROSESAN SPASIAL
+  [+] Membaca berkas CSV: data_jawa.csv (119 baris)
+  [+] Proyeksi Koordinat: WGS84 -> EPSG:32749 (satuan km)
+  [+] Pemusatan X       : True (mean-centering X1, X2, X3)
+  [+] Data siap         : n = 119, k = 3 prediktor
+
+[2/5] MENJALANKAN 6 KOMBINASI MODEL GWR
+  ----------------------------------------------------------------------------
+  No  | Model                    | Bandwidth  | ENP     | AICc    | Status          
+  ----------------------------------------------------------------------------
+  1   | GWR_Gaussian_Fixed       | 459.31 km  | 5.3     | 1297.77 | [OK]            
+  2   | GWR_Bisquare_Fixed       | 1140.58 km | 4.97    | 1298.3  | [OK]            
+  3   | GWR_Exponential_Fixed    | 340.43 km  | 8.35    | 1294.3  | [OK]            
+  4   | GWR_Gaussian_Adaptive    | 85 tetangga | 5.4     | 1298.02 | [OK]            
+  5   | GWR_Bisquare_Adaptive    | 117 tetangga | 6.9     | 1297.26 | [OK]            
+  6   | GWR_Exponential_Adaptive | 91 tetangga | 6.96    | 1296.41 | [OK]            
+  ----------------------------------------------------------------------------
+
+[3/5] AUDIT STABILITAS & SELEKSI SEMENTARA
+  [+] Model dengan AICc Terendah : GWR_Exponential_Fixed
+      Bandwidth: 340.43 km | AICc: 1294.3 | ENP: 8.35
+
+[4/5] EKSTRAKSI KOEFISIEN LOKAL & DIAGNOSTIK
+  [+] Condition Number lokal maksimum: 2.94 (Batas curiga > 30)
+  [+] Kestabilan matriks lokal: Stabil dan andal.
+  [+] Rentang Local R2: 0.289 s.d. 0.357
+
+[5/5] MENYIMPAN BERKAS SERAH TERIMA (KONTRAK BAB 1)
+  [✓] Disimpan: D:\Nia\Kuliah\SEM 5\ML\output\tabel\tabel7_seleksi_gwr.csv
+  [✓] Disimpan: D:\Nia\Kuliah\SEM 5\ML\output\tabel\gwr_koef_lokal.csv
+  [✓] Disimpan: D:\Nia\Kuliah\SEM 5\ML\output\tabel\gwr_model_terpilih.json
+  [✓] Disimpan: D:\Nia\Kuliah\SEM 5\ML\output\tabel\cv_kurva.csv
+
+================================================================================
+STATUS: SELESAI DENGAN SUKSES. 4 Berkas siap diserahkan ke April & Nisa.
+================================================================================

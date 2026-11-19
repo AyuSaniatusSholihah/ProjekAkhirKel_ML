@@ -64,7 +64,7 @@ def cetak_banner():
     banner = """
 ================================================================================
    GWR MODEL ESTIMATION & BANDWIDTH SELECTION (04_gwr_model.py)
-   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Jawa Tengah (n=35)
+   Penanggung Jawab: Nia | Alur Langkah 5 & 6 | Seluruh Pulau Jawa (n=119)
 ================================================================================
 """
     logger.info(banner)
@@ -126,6 +126,8 @@ def load_and_preprocess_data():
         col_lon = [c for c in df_jt.columns if "bujur" in c.lower() or "lon" in c.lower()][0]
 
         df = pd.DataFrame()
+        if col_prov:
+            df["provinsi"] = df_jt[col_prov[0]].str.strip()
         df[config.KOL_NAMA] = df_jt[col_kab].apply(format_nama)
         df[config.KOL_Y] = pd.to_numeric(df_jt[col_y].astype(str).str.replace(",", "."), errors="coerce")
         df["x1_infrastruktur"] = pd.to_numeric(df_jt[col_x1].astype(str).str.replace(",", "."), errors="coerce")
@@ -369,6 +371,8 @@ def ekstrak_tabel_koef_lokal(model_terpilih, df_raw, y, X):
 
     # Buat DataFrame
     df_out = pd.DataFrame()
+    if "provinsi" in df_raw.columns:
+        df_out["provinsi"] = df_raw["provinsi"]
     df_out[config.KOL_NAMA] = df_raw[config.KOL_NAMA]
 
     var_labels = ["b0_intercept"] + [f"b{i+1}_{col}" for i, col in enumerate(config.KOL_X)]
