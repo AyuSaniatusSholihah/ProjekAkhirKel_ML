@@ -1,0 +1,9 @@
+uji,statistik,p_value,keputusan,catatan
+Kolmogorov-Smirnov (normalitas residual),0.061357028400626845,0.7378693603332434,terpenuhi,"residual dibagi simpangan baku sampel (ddof=1) vs N(0,1); parameter diestimasi dari sampel sehingga p cenderung longgar"
+Shapiro-Wilk (normalitas residual),0.9813856768837848,0.09861341261498402,terpenuhi,pembanding KS untuk n kecil
+Jarque-Bera (normalitas residual),3.9130000672776704,0.14135228440460268,terpenuhi,berbasis skewness dan kurtosis
+White (homoskedastisitas),13.250420210694447,0.15159853571768953,terpenuhi,statistik LM; H0 = ragam residual homogen
+Breusch-Pagan (homoskedastisitas),9.527285817180413,0.023042849834937335,tidak terpenuhi,statistik LM; H0 = ragam residual homogen
+VIF maksimum (multikolinearitas),1.5644145805996623,,terpenuhi,batas 10; tanpa p-value
+Moran's I residual (p normal),0.20449929028095673,0.00034203533299287576,tidak terpenuhi,"KNN k=4 pada koordinat km, row-standardized; 999 permutasi, seed 42; z_norm = 3.5812; p satu sisi (esda)"
+Moran's I residual (p permutasi),0.20449929028095673,0.002,tidak terpenuhi,"KNN k=4 pada koordinat km, row-standardized; 999 permutasi, seed 42; z_norm = 3.5812; p satu sisi (esda)"
