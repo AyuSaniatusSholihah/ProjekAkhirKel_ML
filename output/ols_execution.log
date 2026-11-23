@@ -1,0 +1,36 @@
+==============================================================================
+  MODEL OLS (03_ols.py) | Y = ipm | prediktor = x1_infrastruktur, x2_keterampilan, x3_pemberdayaan
+==============================================================================
+[1/4] Data: n = 119, prediktor = 3, X dipusatkan = True
+[2/4] Verifikasi AICc: OLS = 651.7585 | mgwr (bw sangat besar) = 651.7585 -> SAMA
+[3/4] Bobot: knn | n=119 | pulau=0 (k = 4, baris distandarisasi, koordinat km)
+[4/4] HASIL (dibulatkan hanya untuk tampilan)
+
+           variabel  koefisien  std_error        t  p_value  ci_lower  ci_upper    vif  sig
+       b0_intercept    74.9457     0.3338 224.5134   0.0000   74.2845   75.6069    NaN    1
+b1_x1_infrastruktur     0.6375     0.0651   9.7906   0.0000    0.5085    0.7664 1.1208    1
+ b2_x2_keterampilan    -0.0301     0.0745  -0.4041   0.6869   -0.1777    0.1175 1.4241    0
+ b3_x3_pemberdayaan     0.2870     0.1143   2.5120   0.0134    0.0607    0.5134 1.5644    1
+
+  R2 = 0.5413 | Adj R2 = 0.5293 | F(3,115) = 45.227 (p = 2.22e-19)
+  RSS = 1524.94 | RMSE = 3.580 | MAE = 2.897 | AIC = 651.23 | AICc = 651.76 | ENP = 4
+
+                                     uji  statistik  p_value       keputusan
+Kolmogorov-Smirnov (normalitas residual)     0.0614   0.7379       terpenuhi
+      Shapiro-Wilk (normalitas residual)     0.9814   0.0986       terpenuhi
+       Jarque-Bera (normalitas residual)     3.9130   0.1414       terpenuhi
+               White (homoskedastisitas)    13.2504   0.1516       terpenuhi
+       Breusch-Pagan (homoskedastisitas)     9.5273   0.0230 tidak terpenuhi
+        VIF maksimum (multikolinearitas)     1.5644      NaN       terpenuhi
+           Moran's I residual (p normal)     0.2045   0.0003 tidak terpenuhi
+        Moran's I residual (p permutasi)     0.2045   0.0020 tidak terpenuhi
+
+  Nilai ekstrem Y (|z| > 2):
+      kabupaten_kota   ipm    z
+       Kota Salatiga 85.72 2.03
+Kota Jakarta Selatan 86.94 2.26
+     Kota Yogyakarta 88.77 2.60
+              Sleman 85.61 2.01
+
+  Berkas disimpan di: D:\Documents\Informatika UNS\Semester 5\Machine Learning\project\ProjekAkhirKel_ML\output\tabel
+  STATUS: SELESAI. tabel5_ols, metrik_ols, tabel6_asumsi_ols, residual_ols siap untuk April dan Nisa.
