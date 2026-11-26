@@ -1,6 +1,6 @@
 """
 ================================================================================
-Modul 03: Model Regresi Linear OLS (03_ols.py)           Penanggung jawab: Naya
+Modul 03: Model Regresi Linear OLS (03_ols.py)           
 ================================================================================
 Model   : Y = b0 + b1*X1 + b2*X2 + b3*X3 + e   (Y dan X dibaca dari config.py)
 Catatan : X dipusatkan (config.PUSATKAN_X), jadi b0 = rata-rata Y pada skor rata-rata
