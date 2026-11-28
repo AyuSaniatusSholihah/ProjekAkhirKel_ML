@@ -1,0 +1,32 @@
+==============================================================================
+  EVALUASI MODEL GWR vs OLS (04b_evaluasi.py)
+  Penanggung Jawab: April | Alur Langkah 7 | Pulau Jawa (n=119)
+==============================================================================
+
+[1/5] MEMBACA DATA MASUKAN SERAH TERIMA
+  [+] OLS Baseline  : AICc = 651.76, RMSE = 3.580
+  [+] Varian GWR    : 6 model diuji oleh Nia
+  [+] GWR Terpilih  : GWR_Gaussian_Fixed (AICc = 651.91)
+
+[2/5] SELEKSI MODEL TERBAIK & ANALISIS KESETARAAN (AICc)
+  [+] Model GWR AICc Terendah : GWR_Gaussian_Fixed (AICc = 651.91)
+  [+] Model setara (ΔAICc < 4) : GWR_Gaussian_Fixed, GWR_Bisquare_Fixed, GWR_Exponential_Fixed, GWR_Gaussian_Adaptive, GWR_Exponential_Adaptive
+
+[3/5] UJI F GWR vs OLS
+  [+] RSS OLS: 1524.94 | RSS GWR: 1524.72
+  [+] df pembilang: 0.080 | df penyebut: 114.920
+  [+] Statistik F: 0.2108 | p-value: 0.1562
+  [i] GWR tidak memberikan perbaikan yang signifikan secara statistik dibanding OLS (hubungan homogen).
+
+[4/5] MENYUSUN TABEL RINGKASAN KOEFISIEN (TABEL 8 & 9)
+
+[5/5] MENYUSUN TABEL PERBANDINGAN MODEL (TABEL 10)
+  [✓] Disimpan: C:\Users\Aprilia Alfa Gusasti\Documents\5. SEMESTER 5 Kuliah\Machine Learning\Proyek\ProjekAkhirKel_ML\output\tabel\tabel8_ringkasan_koef.csv
+  [✓] Disimpan: C:\Users\Aprilia Alfa Gusasti\Documents\5. SEMESTER 5 Kuliah\Machine Learning\Proyek\ProjekAkhirKel_ML\output\tabel\tabel9_signifikansi.csv
+  [✓] Disimpan: C:\Users\Aprilia Alfa Gusasti\Documents\5. SEMESTER 5 Kuliah\Machine Learning\Proyek\ProjekAkhirKel_ML\output\tabel\tabel10_perbandingan.csv
+  [✓] Disimpan: C:\Users\Aprilia Alfa Gusasti\Documents\5. SEMESTER 5 Kuliah\Machine Learning\Proyek\ProjekAkhirKel_ML\output\tabel\gwr_ringkasan.json
+
+==============================================================================
+  STATUS: SELESAI DENGAN SUKSES!
+  Tabel 8, 9, 10 dan gwr_ringkasan.json siap diserahkan ke Nisa (Visualisasi).
+==============================================================================

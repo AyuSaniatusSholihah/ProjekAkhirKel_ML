@@ -1,0 +1,5 @@
+variabel,ols_koef,min_lokal,q1_lokal,median_lokal,q3_lokal,maks_lokal,iqr_lokal
+Intersep,74.9457,74.946,74.9478,74.9496,74.9506,74.9523,0.0028
+X1 (Infrastruktur & Ekosistem),0.6375,0.6366,0.6372,0.6376,0.6381,0.6386,0.0009
+X2 (Keterampilan Digital),-0.0301,-0.0306,-0.0302,-0.0298,-0.0295,-0.029,0.0007
+X3 (Pemberdayaan),0.287,0.2863,0.2864,0.2865,0.2865,0.2867,0.0001

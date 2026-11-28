@@ -1,0 +1,10 @@
+metrik,OLS,GWR,keterangan
+Effective Number of Parameters (ENP),4.0,4.08,Parameter model
+Residual Sum of Squares (RSS),1524.94,1524.72,Jumlah kuadrat sisaan
+Root Mean Squared Error (RMSE),3.58,3.58,Akurasi estimasi
+Mean Absolute Error (MAE),2.897,2.9,Rata-rata galat absolut
+Akaike Information Criterion (AIC),651.23,651.41,Kriteria informasi
+Corrected AIC (AICc),651.76,651.91,Kriteria seleksi utama
+R-squared / Local R-squared (Rata-rata),0.5413,0.5411,Daya penjelas
+Adjusted R-squared,0.5293,0.5291,R2 disesuaikan
+Moran's I Residual,0.2045 (p=0.0003),~0.2045,Autokorelasi sisaan

@@ -1,0 +1,18 @@
+{
+  "model_terbaik": "GWR_Gaussian_Fixed",
+  "kernel": "gaussian",
+  "fixed": true,
+  "bandwidth": 1918.16,
+  "satuan_bw": "km",
+  "ENP": 4.08,
+  "AICc": 651.91,
+  "F": 0.21084313026352344,
+  "p_F": 0.15623562243280864,
+  "df_num": 0.08000000000000007,
+  "df_den": 114.92,
+  "moran_resid_gwr": 0.2045,
+  "cond_number_maks": 2.05,
+  "n_cn_lebih_30": 0,
+  "vif_lokal_maks": 2.05,
+  "kesimpulan": "Model OLS global lebih parsimonius dan efisien (AICc 651.76 vs GWR 651.91) karena hubungan spasial homogen."
+}
